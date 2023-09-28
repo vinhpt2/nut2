@@ -1,0 +1,153 @@
+CREATE OR REPLACE FUNCTION f_tinhngaycong(nam integer, thang integer, doitac text,dulieu integer) RETURNS void AS $$
+update CHAMCONG SET C1=0 WHERE NAM=nam AND THANG=thang AND MADOITAC=doitac AND DULIEU=dulieu AND THOIGIANVE-THOIGIANDEN<'01:30:00';
+update CHAMCONG SET C1=0.5 WHERE NAM=nam AND THANG=thang AND MADOITAC=doitac AND DULIEU=dulieu AND ca=1 AND THOIGIANVE-THOIGIANDEN>='01:30:00';
+update CHAMCONG SET C1=(CASE WHEN THOIGIANVE-THOIGIANDEN>='04:00:00' THEN 1 ELSE 0.5 END) WHERE NAM=nam AND THANG=thang AND MADOITAC=doitac AND DULIEU=dulieu AND ca=0 AND THOIGIANVE-THOIGIANDEN>='01:30:00';
+update CHAMCONG SET TUAN=date_part('week',date(NAM||'-'||THANG||'-'||NGAY)) WHERE NAM=nam AND THANG=thang AND MADOITAC=doitac AND DULIEU=dulieu;
+$$ LANGUAGE sql;
+
+CREATE OR REPLACE FUNCTION f_now() RETURNS double precision AS $$
+SELECT EXTRACT(EPOCH FROM (SELECT NOW())) * 1000;
+$$ LANGUAGE sql;
+
+CREATE OR REPLACE FUNCTION f_tonquy(ngay date,quy character varying(20)) RETURNS numeric AS $$
+select sum(case when lachi then -giatri else giatri end) from thanhtoan where (ngay is null or ngaythanhtoan<ngay) and maquy=quy
+$$ LANGUAGE sql;
+
+CREATE OR REPLACE FUNCTION f_tontk(ngay date, tai_khoan character varying(20), tk_doi_ung character varying(20), doi_tac character varying(20), du_an character varying(20), nhan_vien character varying(50)) RETURNS numeric AS $$
+select sum(case when lachi then -giatri else giatri end) from thanhtoan where (ngay is null or ngaythanhtoan<ngay) and taikhoan=tai_khoan and (tk_doi_ung is null or tkdoiung=tk_doi_ung) and (doi_tac is null or madoitac=doi_tac) and (du_an is null or maduan=du_an) and (nhan_vien is null or manhanvien=nhan_vien)
+$$ LANGUAGE sql;
+
+CREATE OR REPLACE FUNCTION f_sumhoadon(tungay date,denngay date,dautk text,isout boolean) RETURNS numeric AS $$
+SELECT sum(case when laban=isout and taikhoan like dautk then giatri else 0 end) from hoadon where (tungay is null or ngayhoadon>=tungay) and (denngay is null or ngayhoadon>=tungay)
+$$ LANGUAGE sql;
+
+CREATE OR REPLACE FUNCTION f_sumthanhtoan(tungay date,denngay date,dautk text,isout boolean) RETURNS numeric AS $$
+SELECT sum(case when lachi=isout and taikhoan like dautk then giatri else 0 end) from thanhtoan where (tungay is null or ngaythanhtoan>=tungay) and (denngay is null or ngaythanhtoan>=tungay)
+$$ LANGUAGE sql;
+
+CREATE OR REPLACE FUNCTION f_congnohoadon(tungay date,denngay date) RETURNS table(madoitac text,no1 numeric, co1 numeric,no2 numeric, co2 numeric,no3 numeric, co3 numeric) AS $$
+select madoitac,sum(case when not laban and ngayhoadon<tungay then giatri end) as no1,sum(case when laban and ngayhoadon<tungay then giatri end) as co1,sum(case when not laban and ngayhoadon between tungay and denngay then giatri end) as no2,sum(case when laban and ngayhoadon between tungay and denngay then giatri end) as co2,sum(case when not laban and ngayhoadon>denngay then giatri end) as no3,sum(case when laban and ngayhoadon>denngay then giatri end) as co3 from hoadon where madoitac is not null group by madoitac
+$$ LANGUAGE sql;
+
+CREATE OR REPLACE FUNCTION f_congnothanhtoan(tungay date,denngay date) RETURNS table(madoitac text,no1 numeric, co1 numeric,no2 numeric, co2 numeric,no3 numeric, co3 numeric) AS $$
+select madoitac,sum(case when not lachi and ngaythanhtoan<tungay then giatri end) as no1,sum(case when lachi and ngaythanhtoan<tungay then giatri end) as co1,sum(case when not lachi and ngaythanhtoan between tungay and denngay then giatri end) as no2,sum(case when lachi and ngaythanhtoan between tungay and denngay then giatri end) as co2,sum(case when not lachi and ngaythanhtoan>denngay then giatri end) as no3,sum(case when lachi and ngaythanhtoan>denngay then giatri end) as co3 from thanhtoan where madoitac is not null group by madoitac
+$$ LANGUAGE sql;
+
+CREATE OR REPLACE FUNCTION f_distincttext(col text, tab text, lim int default 100, wclause text default true) returns table(text text) as $$
+BEGIN
+  RETURN query EXECUTE 'select distinct ' || col || '::text as text from ' || tab || ' where ' || wclause || ' order by text limit ' || lim;
+END; $$ language plpgsql;
+
+CREATE OR REPLACE FUNCTION f_nsdongbhxh(y integer, m integer, d integer) returns table(manhanvien text) as $$
+select s.manhanvien from (select sum(ngaycong) sumngaycong, cc.manhanvien from chamcong_v cc inner join
+(select max(ngaybatdaulamviec) ngaybdlv, manhanvien from hopdonglaodong where ngaybatdaulamviec<=(y||'-'||m||'-'||d)::date and (ngaythoiviec is null or (y||'-'||m||'-'||d)::date<ngaythoiviec) group by manhanvien) hd
+on hd.manhanvien=cc.manhanvien 
+where nam=y and thang=m and dulieu=0 and (y||'-'||m||'-'||d)::date>=ngaybdlv+30 group by cc.manhanvien) s where s.sumngaycong>=12.5;
+$$ language sql;
+
+CREATE OR REPLACE FUNCTION f_updatetinhtranghsnhansu() returns TRIGGER as $tgr_updatetinhtranghsnhansu$
+begin
+update nhansu set tinhtranghsthue=case when new.chungminhthu then (case when new.soyeulylich and new.hokhau then 'Du' else 'Thieu' end) else 'KhongCo' end,
+tinhtranghsbaohiem=case when new.chungminhthu and new.hokhau then (case when new.soyeulylich then 'Du' else 'Thieu' end) else 'KhongCo' end where manhanvien=new.manhanvien;
+return new;
+end
+$tgr_updatetinhtranghsnhansu$ LANGUAGE plpgsql;
+CREATE TRIGGER tgr_updatetinhtranghsnhansu
+    AFTER UPDATE ON hosogiayto
+    FOR EACH ROW
+    EXECUTE FUNCTION f_updatetinhtranghsnhansu();
+
+CREATE OR REPLACE FUNCTION f_rptchitieutuyendung(ngay date,madt character varying(20),ttruong character varying(20),vtlv character varying(20)) RETURNS setof record AS $$
+SELECT ct.madoitac,
+ct.thitruong,
+    ct.makhuvuc,
+    ct.vitrilv,
+    ct.ngaynhanchitieu,
+    ct.soluong,
+    ns.danglam,
+    ns.ungvien,
+    ns.chophongvan,
+    ns.phongvandat,
+	ct.ghichu
+   FROM ( SELECT ct1.idchitieutuyendung,
+            ct1.madoitac,
+            ct1.ngaynhanchitieu,
+            ct1.vitrilv,
+			khuvuc.thitruong,
+            ct1.makhuvuc,
+            ct1.soluong,
+            ct1.gioitinh,
+            ct1.ghichu
+           FROM chitieutuyendung ct1 left join khuvuc on khuvuc.makhuvuc=ct1.makhuvuc
+          WHERE ct1.madoitac=madt and khuvuc.thitruong=ttruong and ct1.vitrilv=vtlv and ct1.ngaynhanchitieu = (( SELECT max(ct2.ngaynhanchitieu) AS max
+                   FROM chitieutuyendung ct2 left join khuvuc on khuvuc.makhuvuc=ct2.makhuvuc
+                  WHERE ct2.madoitac=madt and khuvuc.thitruong=ttruong and ct2.vitrilv=vtlv and ct2.ngaynhanchitieu<=ngay and ct1.madoitac::text = ct2.madoitac::text AND ct1.makhuvuc::text = ct2.makhuvuc::text AND ct1.vitrilv::text = ct2.vitrilv::text))) ct
+     LEFT JOIN ( SELECT nhansu.madoitac,
+            nhansu.makhuvuc,
+            nhansu.vitrilv,
+            sum(
+                CASE
+                    WHEN manhanvien in (select manhanvien from hopdonglaodong where ngaybatdaulamviec<=ngay and (ngay<=ngaythoiviec or ngaythoiviec is null))  THEN 1
+                    ELSE 0
+                END) AS danglam,
+            sum(
+                CASE
+                    WHEN ngaythuthap<=ngay and (ngay<ngayloaibo or ngayloaibo is null and manhanvien in (select manhanvien from hopdonglaodong where ngay<ngaybatdaulamviec)) THEN 1
+                    ELSE 0
+                END) AS ungvien,
+            sum(
+                CASE
+                    WHEN ngaythuthap<=ngay and ngay<ngaypv THEN 1
+                    ELSE 0
+                END) AS chophongvan,
+            sum(
+                CASE
+                    WHEN ngaythuthap<=ngay and pvlan2='Dat' and (ngay<ngayloaibo or ngayloaibo is null and manhanvien in (select manhanvien from hopdonglaodong where ngay<ngaybatdaulamviec)) THEN 1
+                    ELSE 0
+                END) AS phongvandat
+           FROM nhansu
+          GROUP BY nhansu.madoitac, nhansu.makhuvuc, nhansu.vitrilv) ns(madoitac, makhuvuc, vitrilv, danglam, ungvien, chophongvan, phongvandat) ON ct.madoitac::text = ns.madoitac::text AND ct.makhuvuc::text = ns.makhuvuc::text AND ct.vitrilv::text = ns.vitrilv::text
+          order by ct.madoitac, ct.vitrilv, ct.makhuvuc;
+$$ LANGUAGE sql;
+
+-- Create an event trigger function
+CREATE OR REPLACE FUNCTION f_pgrst_watch() RETURNS void LANGUAGE plpgsql AS $$
+BEGIN
+  NOTIFY pgrst, 'reload schema';
+END; $$;
+--- JWT GET TOKEN
+CREATE OR REPLACE FUNCTION f_login(usr text, pass text) RETURNS setof record AS $$
+  SELECT r.clientid,r.userid,username,ext,sys.sign((('{"role":"'||r.role||'","exp":'||r.exp||'}')::json), 'VINHHOACOCHIPCACAOCHERRYVINHHOACOCHIPCACAOCHERRY'),sys.sign(('{"role":"sys","exp":'||r.exp||'}')::json, 'VINHHOACOCHIPCACAOCHERRYVINHHOACOCHIPCACAOCHERRY')AS ssign
+  FROM (SELECT sysuser.clientid, userid, username, ext, clientcode AS role, extract(epoch from now())::integer + 3600 AS exp FROM sys.sysuser LEFT JOIN sys.sysclient ON sysuser.clientid=sysclient.clientid  WHERE username=usr AND password=pass AND status=1) r
+$$ LANGUAGE sql security definer;
+
+grant execute on function f_login(text,text) to anon;
+
+---------------------------------------------
+Các bước thực hiện JWT trên Postgresql
+1. Cài đặt thư viện pgjwt
+https://raw.githubusercontent.com/michelp/pgjwt/master/pgjwt--0.1.1.sql
+
+2. Tạo hàm f_login như ở trên với thuộc tính security definer
+
+3. Tạo role sys với toàn quyền trên schema sys
+create role sys nologin;
+grant all on schema sys to sys;
+
+4. Tạo role anon (anonymous) với quyền thực thi f_login
+create role anon nologin;
+grant usage on schema sys to anon;
+grant execute on function f_login(text,text) from auth
+
+5. Tạo role auth (authenticator) và set member
+create role auth noinherit login password 'mypassword';
+grant anon to authenticator;
+grant sys to authenticator;
+
+6. Tạo file config của PostgREST
+db-uri = "postgres://auth:mypassword@localhost:5432/db"
+db-schema = "sys"
+db-anon-role = "anon"
+jwt-secret = "VINHHOACOCHIPCACAOCHERRYVINHHOACOCHIPCACAOCHERRY"
+
+7. Restart PostgREST

@@ -1,0 +1,398 @@
+﻿<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.0\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.0\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{50416700-88EF-48FD-B625-BDC90B017700}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>src</RootNamespace>
+    <AssemblyName>src</AssemblyName>
+    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
+    <UseIISExpress>true</UseIISExpress>
+    <Use64BitIISExpress />
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.11.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.Formatting">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.4\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.4\lib\net45\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.4\lib\net45\System.Web.Http.WebHost.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform">
+      <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.0\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="app.js" />
+    <Content Include="client\0\0\Com_SysAddLayer.js" />
+    <Content Include="client\0\0\Com_SysAddMissField.js" />
+    <Content Include="client\0\0\Com_SysApplicationWizard.js" />
+    <Content Include="client\0\0\Com_SysApplyWindowCache.js" />
+    <Content Include="client\0\0\Com_SysAssignUserRole.js" />
+    <Content Include="client\0\0\Com_SysBuildTab.js" />
+    <Content Include="client\0\0\Com_SysCacheDomain.js" />
+    <Content Include="client\0\0\Com_SysImportTable.js" />
+    <Content Include="client\0\0\Com_SysLayoutWindow.js" />
+    <Content Include="client\0\0\Com_SysPreviewWindow.js" />
+    <Content Include="client\0\0\Com_SysRoleAssignmentFunction.js" />
+    <Content Include="client\0\0\Com_SysRoleAssignmentMenuitem.js" />
+    <Content Include="client\0\0\Com_SysRoleAssignmentUser.js" />
+    <Content Include="client\0\0\Com_SysWfAddJob.js" />
+    <Content Include="client\0\0\Com_SysWfBackJob.js" />
+    <Content Include="client\0\0\Com_SysWfGetJob.js" />
+    <Content Include="client\0\0\Com_SysWfManager.js" />
+    <Content Include="client\0\0\Com_SysWfRunJob.js" />
+    <Content Include="client\0\0\gear.ico" />
+    <Content Include="client\0\0\step1.html" />
+    <Content Include="client\0\0\step2.html" />
+    <Content Include="client\0\0\step3.html" />
+    <Content Include="client\0\1\report.ico" />
+    <Content Include="client\0\2\workflow.ico" />
+    <Content Include="client\0\nut.ico" />
+    <Content Include="client\0\nutboat.jpg" />
+    <Content Include="client\1\4\Com_TnmtInTrichLucThua.js" />
+    <Content Include="client\1\4\Com_TnmtInTrichLucThua2.js" />
+    <Content Include="client\1\5\danang.jpg" />
+    <Content Include="client\1\5\landinfo.ico" />
+    <Content Include="client\1\5\tnmt.ico" />
+    <Content Include="client\2\6\Com_HrmsBaoCaoLamViecNV.js" />
+    <Content Include="client\2\6\Com_HrmsBaoCaoPhieuLuongNV.js" />
+    <Content Include="client\2\6\Com_HrmsBaoNghiNgayLam.js" />
+    <Content Include="client\2\6\Com_HrmsCheckBefore9.js" />
+    <Content Include="client\2\6\Com_HrmsCheckInOut.js" />
+    <Content Include="client\2\6\Com_HrmsDailyChamCongReport.js" />
+    <Content Include="client\2\6\Com_HrmsDailyCheckInOutReport.js" />
+    <Content Include="client\2\6\Com_HrmsDailyM03Report.js" />
+    <Content Include="client\2\6\Com_HrmsDailySanLuongReport.js" />
+    <Content Include="client\2\6\Com_HrmsGiaiTrinhKhongCheckIn.js" />
+    <Content Include="client\2\6\Com_HrmsImportBangLuong.js" />
+    <Content Include="client\2\6\Com_HrmsImportNgayCong.js" />
+    <Content Include="client\2\6\Com_HrmsImportSanLuong.js" />
+    <Content Include="client\2\6\Com_HrmsInThongTinNV.js" />
+    <Content Include="client\2\6\Com_HrmsMonthlyMS02Report.js" />
+    <Content Include="client\2\6\Com_HrmsMonthlyMS03Report.js" />
+    <Content Include="client\2\6\Com_HrmsMonthlyMS05Report.js" />
+    <Content Include="client\2\6\Com_HrmsTinhNgayCong.js" />
+    <Content Include="client\2\6\Com_HrmsUpdateKetQuaPV.js" />
+    <Content Include="client\2\6\Com_HrmsUpdateThongTinNV.js" />
+    <Content Include="client\2\6\DailyChamCongReport.html" />
+    <Content Include="client\2\6\DailyCheckInoutReport.html" />
+    <Content Include="client\2\6\DailyM03Report.html" />
+    <Content Include="client\2\6\DailySanLuongReport.html" />
+    <Content Include="client\2\6\factory.ico" />
+    <Content Include="client\2\6\in.ico" />
+    <Content Include="client\2\6\MonthlyMS02Report.html" />
+    <Content Include="client\2\6\MonthlyMS03Report.html" />
+    <Content Include="client\2\6\MonthlyMS05Report.html" />
+    <Content Include="client\2\6\out.ico" />
+    <Content Include="client\2\6\pg.ico" />
+    <Content Include="client\2\7\Com_RptDoanhThuChiPhi.js" />
+    <Content Include="client\2\7\Com_RptKetQuaKinhDoanh.js" />
+    <Content Include="client\2\7\Com_RptSoChiTietTaiKhoan.js" />
+    <Content Include="client\2\7\Com_RptSoQuyTienMat.js" />
+    <Content Include="client\2\7\fin.ico" />
+    <Content Include="client\2\7\RptDoanhThuChiPhi.html" />
+    <Content Include="client\2\7\RptKetQuaKinhDoanh.html" />
+    <Content Include="client\2\7\RptSoChiTietTaiKhoan.html" />
+    <Content Include="client\2\7\RptSoQuyTienMat.html" />
+    <Content Include="client\2\f_tinhngaycong.txt" />
+    <Content Include="client\2\hrms.ico" />
+    <Content Include="client\2\hrms.jpg" />
+    <Content Include="client\2\orit.png" />
+    <Content Include="engine\bpmnjs\css\bpmn-8.2.2.css" />
+    <Content Include="engine\bpmnjs\css\diagram-8.2.2.css" />
+    <Content Include="engine\bpmnjs\favicon.ico" />
+    <Content Include="engine\bpmnjs\font\bpmn.eot" />
+    <Content Include="engine\bpmnjs\font\bpmn.svg" />
+    <Content Include="engine\bpmnjs\font\bpmn.ttf" />
+    <Content Include="engine\bpmnjs\font\bpmn.woff" />
+    <Content Include="engine\bpmnjs\font\bpmn.woff2" />
+    <Content Include="engine\bpmnjs\index.html" />
+    <Content Include="engine\bpmnjs\index.js" />
+    <Content Include="engine\bpmnjs\scripts\bpmn-modeler.8.2.2.js" />
+    <Content Include="engine\bpmnjs\scripts\bpmn-modeler.8.2.2.min.js" />
+    <Content Include="favicon.ico" />
+    <Content Include="Global.asax" />
+    <Content Include="img\add.png" />
+    <Content Include="img\adv\bottom-banner.png" />
+    <Content Include="img\adv\qc.jpg" />
+    <Content Include="img\adv\qc2.jpg" />
+    <Content Include="img\adv\qc3.png" />
+    <Content Include="img\adv\top-banner.png" />
+    <Content Include="img\application.png" />
+    <Content Include="img\cross.png" />
+    <Content Include="img\edit.png" />
+    <Content Include="img\excel.png" />
+    <Content Include="img\fieldtype\checkbox.png" />
+    <Content Include="img\fieldtype\color.png" />
+    <Content Include="img\fieldtype\date.png" />
+    <Content Include="img\fieldtype\email.png" />
+    <Content Include="img\fieldtype\file.png" />
+    <Content Include="img\fieldtype\integer.png" />
+    <Content Include="img\fieldtype\money.png" />
+    <Content Include="img\fieldtype\number.png" />
+    <Content Include="img\fieldtype\password.png" />
+    <Content Include="img\fieldtype\radio.png" />
+    <Content Include="img\fieldtype\search.png" />
+    <Content Include="img\fieldtype\select.png" />
+    <Content Include="img\fieldtype\string.png" />
+    <Content Include="img\fieldtype\textarea.png" />
+    <Content Include="img\fieldtype\time.png" />
+    <Content Include="img\fieldtype\toggle.png" />
+    <Content Include="img\find.png" />
+    <Content Include="img\form.png" />
+    <Content Include="img\index.css" />
+    <Content Include="img\left.png" />
+    <Content Include="img\minus.png" />
+    <Content Include="img\new.png" />
+    <Content Include="img\nut.ico" />
+    <Content Include="img\nutboat.jpg" />
+    <Content Include="img\right.png" />
+    <Content Include="img\save.png" />
+    <Content Include="img\table.png" />
+    <Content Include="img\wait.gif" />
+    <Content Include="index.html" />
+    <Content Include="index.js" />
+    <Content Include="js\fldimage.js" />
+    <Content Include="js\fldsearch.js" />
+    <Content Include="js\geoserver.js" />
+    <Content Include="js\gsmap.js" />
+    <Content Include="js\kp\awt\AWBasic.js" />
+    <Content Include="js\kp\awt\AWEdit.js" />
+    <Content Include="js\kp\awt\AWSnap.js" />
+    <Content Include="js\kp\awt\AWToolbox.js" />
+    <Content Include="js\kp\awt\css\addto.png" />
+    <Content Include="js\kp\awt\css\attribute.png" />
+    <Content Include="js\kp\awt\css\autopolygon.png" />
+    <Content Include="js\kp\awt\css\awb.css" />
+    <Content Include="js\kp\awt\css\awbasic.png" />
+    <Content Include="js\kp\awt\css\awd.css" />
+    <Content Include="js\kp\awt\css\awdraw.png" />
+    <Content Include="js\kp\awt\css\awe.css" />
+    <Content Include="js\kp\awt\css\awedit.png" />
+    <Content Include="js\kp\awt\css\aws.css" />
+    <Content Include="js\kp\awt\css\awsnap.png" />
+    <Content Include="js\kp\awt\css\awtoolbox.png" />
+    <Content Include="js\kp\awt\css\awx.css" />
+    <Content Include="js\kp\awt\css\back.png" />
+    <Content Include="js\kp\awt\css\basemap.png" />
+    <Content Include="js\kp\awt\css\break.png" />
+    <Content Include="js\kp\awt\css\buffer.png" />
+    <Content Include="js\kp\awt\css\close.png" />
+    <Content Include="js\kp\awt\css\compa.png" />
+    <Content Include="js\kp\awt\css\confirm32.png" />
+    <Content Include="js\kp\awt\css\copy.png" />
+    <Content Include="js\kp\awt\css\delete.png" />
+    <Content Include="js\kp\awt\css\drawselect.png" />
+    <Content Include="js\kp\awt\css\duplicate.png" />
+    <Content Include="js\kp\awt\css\edge.png" />
+    <Content Include="js\kp\awt\css\editselect.png" />
+    <Content Include="js\kp\awt\css\editvertex.png" />
+    <Content Include="js\kp\awt\css\eke.png" />
+    <Content Include="js\kp\awt\css\erase.png" />
+    <Content Include="js\kp\awt\css\error32.png" />
+    <Content Include="js\kp\awt\css\extract.png" />
+    <Content Include="js\kp\awt\css\fullextent.png" />
+    <Content Include="js\kp\awt\css\help.png" />
+    <Content Include="js\kp\awt\css\identify.png" />
+    <Content Include="js\kp\awt\css\infor32.png" />
+    <Content Include="js\kp\awt\css\join.png" />
+    <Content Include="js\kp\awt\css\label.png" />
+    <Content Include="js\kp\awt\css\layercontrol.png" />
+    <Content Include="js\kp\awt\css\logo.png" />
+    <Content Include="js\kp\awt\css\logo48.png" />
+    <Content Include="js\kp\awt\css\logo96.png" />
+    <Content Include="js\kp\awt\css\map3d.png" />
+    <Content Include="js\kp\awt\css\measure.png" />
+    <Content Include="js\kp\awt\css\merge.png" />
+    <Content Include="js\kp\awt\css\move.png" />
+    <Content Include="js\kp\awt\css\next.png" />
+    <Content Include="js\kp\awt\css\notify32.png" />
+    <Content Include="js\kp\awt\css\ok.png" />
+    <Content Include="js\kp\awt\css\pan.png" />
+    <Content Include="js\kp\awt\css\pen.png" />
+    <Content Include="js\kp\awt\css\pin.png" />
+    <Content Include="js\kp\awt\css\print.png" />
+    <Content Include="js\kp\awt\css\property.png" />
+    <Content Include="js\kp\awt\css\redo.png" />
+    <Content Include="js\kp\awt\css\reshape.png" />
+    <Content Include="js\kp\awt\css\save.png" />
+    <Content Include="js\kp\awt\css\select.png" />
+    <Content Include="js\kp\awt\css\snapedge.png" />
+    <Content Include="js\kp\awt\css\snappoint.png" />
+    <Content Include="js\kp\awt\css\snapvertex.png" />
+    <Content Include="js\kp\awt\css\split.png" />
+    <Content Include="js\kp\awt\css\swipe.png" />
+    <Content Include="js\kp\awt\css\text.png" />
+    <Content Include="js\kp\awt\css\transparent.png" />
+    <Content Include="js\kp\awt\css\undo.png" />
+    <Content Include="js\kp\awt\css\unselect.png" />
+    <Content Include="js\kp\awt\css\warning32.png" />
+    <Content Include="js\kp\awt\css\xy.png" />
+    <Content Include="js\kp\awt\css\zoomin.png" />
+    <Content Include="js\kp\awt\css\zoomout.png" />
+    <Content Include="js\kp\awt\img\dark_gray.jpg" />
+    <Content Include="js\kp\awt\img\imagery.jpg" />
+    <Content Include="js\kp\awt\img\light_gray.jpg" />
+    <Content Include="js\kp\awt\img\national_geographic.jpg" />
+    <Content Include="js\kp\awt\img\oceans.jpg" />
+    <Content Include="js\kp\awt\img\osm.jpg" />
+    <Content Include="js\kp\awt\img\relief.jpg" />
+    <Content Include="js\kp\awt\img\streets.jpg" />
+    <Content Include="js\kp\awt\img\topo.jpg" />
+    <Content Include="js\kp\awt\lib\awt.js" />
+    <Content Include="js\kp\awt\lib\ControlLayer.js" />
+    <Content Include="js\kp\awt\lib\DrawHelper.js" />
+    <Content Include="js\kp\awt\lib\EditHelper.js" />
+    <Content Include="js\kp\awt\lib\Editor.js" />
+    <Content Include="js\kp\awt\prints\landscape-a4.html" />
+    <Content Include="js\kp\awt\prints\potrait-a4.html" />
+    <Content Include="js\lang.js" />
+    <Content Include="js\lib.js" />
+    <Content Include="js\pgrest.js" />
+    <Content Include="lib\1.5\w2ui-1.5.css" />
+    <Content Include="lib\1.5\w2ui-1.5.js" />
+    <Content Include="lib\1.5\w2ui-1.5.js.map" />
+    <Content Include="lib\1.5\w2ui-1.5.min.css" />
+    <Content Include="lib\1.5\w2ui-1.5.min.js" />
+    <Content Include="lib\2.0\jquery-3.6.0.min.js" />
+    <Content Include="lib\2.0\w2ui-1.5.css" />
+    <Content Include="lib\2.0\w2ui-1.5.js" />
+    <Content Include="lib\2.0\w2ui-1.5.min.css" />
+    <Content Include="lib\2.0\w2ui-1.5.min.js" />
+    <Content Include="lib\2.0\w2ui-dark-1.5.css" />
+    <Content Include="lib\2.0\w2ui-dark-1.5.min.css" />
+    <Content Include="lib\2.0\w2ui-dark.min.css" />
+    <Content Include="lib\bk\w2ui-1.5.css" />
+    <Content Include="lib\bk\w2ui-1.5.js" />
+    <Content Include="lib\bpmnviewer-8.2.2.min.js" />
+    <Content Include="lib\cesium-1.81.0.min.js" />
+    <Content Include="lib\jquery-3.5.1.min.js" />
+    <Content Include="lib\ol-6.9.0.min.css" />
+    <Content Include="lib\ol-6.9.0.min.js" />
+    <Content Include="lib\olcesium.js" />
+    <Content Include="lib\olcs.css" />
+    <Content Include="lib\w2ui-1.5.css" />
+    <Content Include="lib\w2ui-1.5.js" />
+    <Content Include="lib\w2ui-2.0.css" />
+    <Content Include="lib\w2ui-2.0.js" />
+    <Content Include="lib\zipson.min.js" />
+    <Content Include="Web.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\ImageController.cs" />
+    <Compile Include="Controllers\UploadController.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+    <None Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+    <Folder Include="client\0\3\" />
+    <Folder Include="client\2\6\upload\" />
+    <Folder Include="Models\" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>55729</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:55729</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.0\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.0\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
